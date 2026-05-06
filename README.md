@@ -12,7 +12,7 @@
 1. 安装依赖（只需一次）：
 
 ```bash
-brew install yt-dlp python-tk@3.12
+brew install yt-dlp python-tk@3.12 ffmpeg
 ```
 
 2. 将 `YouTubeDownloader.app` 拖到任意位置（如应用程序文件夹或桌面）
