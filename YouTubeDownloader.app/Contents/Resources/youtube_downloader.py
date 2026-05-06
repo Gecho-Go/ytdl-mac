@@ -69,7 +69,12 @@ def launch_download(ytdlp, url, download_dir, proxy):
     args = [ytdlp]
     if proxy:
         args += ["--proxy", proxy]
-    args += ["-o", os.path.join(download_dir, "%(title)s.%(ext)s"), "--", url]
+    args += [
+        "-f", "bestvideo[ext=mp4]+bestaudio[ext=m4a]/bestvideo+bestaudio/best",
+        "--merge-output-format", "mp4",
+        "-o", os.path.join(download_dir, "%(title)s.%(ext)s"),
+        "--", url,
+    ]
     cmd = " ".join(sh_q(a) for a in args)
 
     script = "\n".join([
