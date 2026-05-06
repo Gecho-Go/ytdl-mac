@@ -1,0 +1,33 @@
+#!/bin/bash
+# 按优先级找带 Tk 8.6+ 的 Homebrew Python（兼容 Apple Silicon / Intel）
+find_python() {
+    for py in \
+        /opt/homebrew/bin/python3.12 \
+        /opt/homebrew/bin/python3.13 \
+        /opt/homebrew/bin/python3.11 \
+        /opt/homebrew/bin/python3 \
+        /usr/local/bin/python3.12 \
+        /usr/local/bin/python3.13 \
+        /usr/local/bin/python3.11 \
+        /usr/local/bin/python3
+    do
+        [ -x "$py" ] || continue
+        tk_ver=$("$py" -c "import tkinter; print(tkinter.TkVersion)" 2>/dev/null)
+        # 需要 Tk 8.6 及以上（8.5 在 macOS Sonoma 渲染有问题）
+        ok=$("$py" -c "import tkinter; exit(0 if tkinter.TkVersion >= 8.6 else 1)" 2>/dev/null; echo $?)
+        [ "$ok" = "0" ] && echo "$py" && return 0
+    done
+    return 1
+}
+
+PYTHON=$(find_python)
+
+if [ -z "$PYTHON" ]; then
+    osascript -e '
+        display dialog "需要安装 Python + tkinter：\n\n  brew install python-tk@3.12\n\n安装后重新打开即可。" ¬
+        buttons {"好的"} default button 1 with title "YouTube 下载"'
+    exit 1
+fi
+
+RESOURCES="$(dirname "$0")/../Resources"
+exec "$PYTHON" "$RESOURCES/youtube_downloader.py"
