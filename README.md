@@ -4,6 +4,9 @@
 
 ![macOS](https://img.shields.io/badge/macOS-11%2B-blue) ![Python](https://img.shields.io/badge/Python-3.11%2B-green)
 
+<img width="572" height="396" alt="截屏2026-05-06 11 52 00" src="https://github.com/user-attachments/assets/f5d81db5-6ac1-4470-8e05-7dec759a3a3c" />
+
+
 ## 使用
 
 1. 安装依赖（只需一次）：
